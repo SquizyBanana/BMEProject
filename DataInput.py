@@ -36,7 +36,7 @@ def fetch_measurements():
     print(stored_values)
 
 # Create a sensor manager for the given sensor names using the given callback
-sensors = ['6DE2']
+sensors = ['8732']
 manager = SensorManager(sensors)
 
 dict_keys = ["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]
