@@ -12,6 +12,7 @@ class Data_Input:
         self.FREQUENCY = 100  # Adjust for sensor
 
     def start(self, sensors):
+        print("Called")
         # Create a sensor manager for the given sensor names using the given callback
         self.sensors = sensors
         self.manager = SensorManager(self.sensors)
@@ -24,8 +25,8 @@ class Data_Input:
                 self.stored_values[sensor][i] = []
 
 
-        self.fig, self.ax = plt.subplots(2, len(self.sensors),squeeze=False)
-        self.fig.suptitle('Accelerometers and gyroscopes')
+        #self.fig, self.ax = plt.subplots(2, len(self.sensors),squeeze=False)
+        #self.fig.suptitle('Accelerometers and gyroscopes')
 
 
 
@@ -34,12 +35,12 @@ class Data_Input:
 
         #self.ani = animation.FuncAnimation(self.fig, self.animate, interval=20)
 
-        plt.show()
+        #plt.show()
 
         # Stop the sensor manager
-        self.manager.stop()
+        # self.manager.stop()
     def animate(self,i):
-        print(self.increment)
+        #print(self.increment)
         self.fetch_measurements()
         for col in range(len(self.sensors)):
             for row in range(2):
@@ -55,7 +56,7 @@ class Data_Input:
                     self.ax[1, s].legend(loc='upper left')
 
     def fetch_measurements(self):
-        print("called")
+        #print("called")
         measurements = self.manager.get_measurements()
         for sensor, data in measurements.items():
             if not data:
@@ -67,7 +68,7 @@ class Data_Input:
                         if len(self.stored_values[sensor][self.dict_keys[i]]) >= self.TIME_WINDOW*self.FREQUENCY:
                             self.stored_values[sensor][self.dict_keys[i]].pop(0)
                             self.increment[0] = self.increment[0] + 1 / (len(data_packet)*len(self.sensors))
-        print(self.stored_values)
+       # print(self.stored_values)
 
     def get_values(self):
         return self.stored_values
