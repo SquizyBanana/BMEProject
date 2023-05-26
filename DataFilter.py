@@ -2,12 +2,20 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy
 import scipy.signal as signal
+from DataInput import Data_Input
 
 
+data_input = Data_Input()
 # Load data
+sensors = ['6AAE']
 var_names = ['acc_x', 'acc_y', 'acc_z', 'gyr_x', 'gyr_y', 'gyr_z', 'norm'] # Initiate variable names
-df_head = pd.read_csv(r'../BMEProject/data_q3_head.csv', names= var_names) # Load the data
-df_tibia = pd.read_csv(r'../BMEProject/data_q3_tibia.csv', names= var_names) # Load the data
+# df_head = pd.read_csv(r'../BMEProject/data_q3_head.csv', names= var_names) # Load the data
+# df_tibia = pd.read_csv(r'../BMEProject/data_q3_tibia.csv', names= var_names) # Load the data
+data_input.start(sensors)
+data_input.fetch_measurements()
+values = data_input.get_values()
+df_head = values[sensors[0]]
+df_tibia = values[sensors[1]]
 df_tibia['norm'] = numpy.sqrt(df_tibia['acc_x']*df_tibia['acc_x'] + df_tibia['acc_y']*df_tibia['acc_y'] + df_tibia['acc_z']*df_tibia['acc_z'])
 df_head['norm'] = numpy.sqrt(df_head['acc_x']*df_head['acc_x'] + df_head['acc_y']*df_head['acc_y'] + df_head['acc_z']*df_head['acc_z'])
 fs = 512
