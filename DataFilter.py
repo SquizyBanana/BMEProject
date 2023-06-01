@@ -5,11 +5,18 @@ import scipy.signal as signal
 from DataInput import Data_Input
 class Data_filter:
 
-    def __init__(self):
+    def __init__(self,sensors):
         self.data_input = Data_Input()
         # Load data
-        self.sensors = ['6AAE', '7786']
+        self.sensors = sensors
         self.test = 0
+        self.cutOffFrequency = 15
+
+        fs = 60  # Sampling frequency of the sensor
+        fc = self.cutOffFrequency  # Cut-off frequency of the filter
+        w = (2 * fc / fs)  # Normalize the frequency
+        self.b, self.a = signal.butter(2, w, 'low')  # Create filter parameters
+
     def run(self):
         #df_tibia['norm'] = numpy.sqrt(df_tibia['acc_x']*df_tibia['acc_x'] + df_tibia['acc_y']*df_tibia['acc_y'] + df_tibia['acc_z']*df_tibia['acc_z'])
         # df_head['norm'] = numpy.sqrt(df_head['acc_x']*df_head['acc_x'] + df_head['acc_y']*df_head['acc_y'] + df_head['acc_z']*df_head['acc_z'])
@@ -25,9 +32,12 @@ class Data_filter:
         for i in range(len(tibia[0])):
             tibia[3].append(numpy.sqrt(tibia[0][i] * tibia[0][i] + tibia[1][i] * tibia[1][i] + tibia[2][i] * tibia[2][i]))
 
+        # filter data
+        sternum_norm_filtered = signal.lfilter(self.b, self.a, sternum[3])
+        tibia_norm_filtered = signal.lfilter(self.b, self.a, tibia[3])
         # find peaks
-        peaks_s = signal.find_peaks(sternum[3],1, distance=30)
-        peaks_t = signal.find_peaks(tibia[3],1, distance=15)
+        peaks_s = signal.find_peaks(sternum_norm_filtered,1, distance=30)
+        peaks_t = signal.find_peaks(tibia_norm_filtered,1, distance=15)
 
         # seperate data for calculation
         peak_s_indecies, peak_s_values = peaks_s
@@ -54,7 +64,4 @@ class Data_filter:
 
 
 
-programm = Data_filter()
-programm.data_input.start(programm.sensors)
-while True:
-    programm.run()
+
