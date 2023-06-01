@@ -20,7 +20,7 @@ class Data_filter:
     def run(self):
         #df_tibia['norm'] = numpy.sqrt(df_tibia['acc_x']*df_tibia['acc_x'] + df_tibia['acc_y']*df_tibia['acc_y'] + df_tibia['acc_z']*df_tibia['acc_z'])
         # df_head['norm'] = numpy.sqrt(df_head['acc_x']*df_head['acc_x'] + df_head['acc_y']*df_head['acc_y'] + df_head['acc_z']*df_head['acc_z'])
-
+        #self.data_input.animate(1)
         self.data_input.fetch_measurements()
         values = self.data_input.get_values()
         sternum = [values[self.sensors[0]]['acc_x'],values[self.sensors[0]]['acc_y'],values[self.sensors[0]]['acc_z'],[]]
@@ -36,8 +36,8 @@ class Data_filter:
         sternum_norm_filtered = signal.lfilter(self.b, self.a, sternum[3])
         tibia_norm_filtered = signal.lfilter(self.b, self.a, tibia[3])
         # find peaks
-        peaks_s = signal.find_peaks(sternum_norm_filtered,1, distance=30)
-        peaks_t = signal.find_peaks(tibia_norm_filtered,1, distance=15)
+        peaks_s = signal.find_peaks(sternum_norm_filtered,height=1, distance=20)
+        peaks_t = signal.find_peaks(tibia_norm_filtered,height= 1, distance=20)
 
         # seperate data for calculation
         peak_s_indecies, peak_s_values = peaks_s
@@ -51,16 +51,17 @@ class Data_filter:
         # filter sternum peaks
         for s in range(len(peak_s_values)):
             for t in range(len(peak_t_values)):
-                if 0 < (peak_s_indecies[s] - peak_t_indecies[t]) < 15:
+                if 0 < (peak_s_indecies[s] - peak_t_indecies[t]) < 10:
                     peaks_s_corrected.append(peak_s_values[s])
                     peaks_t_corrected.append(peak_t_values[t])
                     break
 
         norms_t = peaks_t_corrected
         norms_s = peaks_s_corrected
-        print("-----------------------------------------------------------------------------------------------------------------")
-        print(float(numpy.mean(numpy.array(norms_s)))/float(numpy.mean(numpy.array(norms_t))))
-        print(len(peaks_s[0])/20)
+        attenuation = float(numpy.mean(numpy.array(norms_s)))/float(numpy.mean(numpy.array(norms_t)))
+        print("steps "+str(len(peaks_s[0])))
+        cadence = len(peaks_s[0])*60/self.data_input.TIME_WINDOW
+        return attenuation, cadence
 
 
 

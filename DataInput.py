@@ -8,7 +8,7 @@ class Data_Input:
 
     def __init__(self):
         self.increment = [0]
-        self.TIME_WINDOW = 20
+        self.TIME_WINDOW = 8
         self.FREQUENCY = 100  # Adjust for sensor
 
     def start(self, sensors):
