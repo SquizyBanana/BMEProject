@@ -66,6 +66,12 @@ class SongPicker():
             if song not in self.song_queue:
                 self.place_in_order(song, target_BPM)
 
+    def get_queue(self):
+        return self.song_queue
+
+    def get_song(self):
+        return self.song_queue[0]
+
     def next_song(self): # Moves a song from the beginning of the queue to the end
         self.song_queue.append(self.song_queue[0])
         self.song_queue.pop(0)
