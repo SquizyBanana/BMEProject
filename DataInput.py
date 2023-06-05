@@ -25,17 +25,17 @@ class Data_Input:
                 self.stored_values[sensor][i] = []
 
 
-        #self.fig, self.ax = plt.subplots(2, len(self.sensors),squeeze=False)
-        #self.fig.suptitle('Accelerometers and gyroscopes')
+        self.fig, self.ax = plt.subplots(2, len(self.sensors),squeeze=False)
+        self.fig.suptitle('Accelerometers and gyroscopes')
 
 
 
         # Start the sensor manager
         self.manager.start()
 
-        #self.ani = animation.FuncAnimation(self.fig, self.animate, interval=20)
+        self.ani = animation.FuncAnimation(self.fig, self.animate, interval=20)
 
-        #plt.show()
+        plt.show()
 
         # Stop the sensor manager
         # self.manager.stop()
