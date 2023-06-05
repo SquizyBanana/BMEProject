@@ -13,3 +13,18 @@ class Song():
         printout_string = f'Song name: "{self.name}", Artist: "{self.artist}", Genre: "{self.genre}", BPM: ˇ{self.BPM}'
         return printout_string
 
+    def get_name(self):
+        return self.name
+
+    def get_artist(self):
+        return self.artist
+
+    def get_music_id(self):
+        return self.music_id
+
+    def get_genre(self):
+        return self.genre
+
+    def get_BPM(self):
+        return self.BPM
+

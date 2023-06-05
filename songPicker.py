@@ -36,18 +36,18 @@ class SongPicker():
         suiting_song_array = []
         for song in self.song_array:
             if not self.relativeBPM:
-                if abs(song.BPM - target_BPM) < self.BPM_fit_margin:
+                if abs(song.get_BPM() - target_BPM) < self.BPM_fit_margin:
                     suiting_song_array.append(song)
             else:
-                if abs(song.BPM - target_BPM) < self.BPM_fit_margin * target_BPM:
+                if abs(song.get_BPM() - target_BPM) < self.BPM_fit_margin * target_BPM:
                     suiting_song_array.append(song)
         return suiting_song_array
 
     def place_in_order(self, song, targetBPM): # Places new songs into the queue at a correct place
         if len(self.song_queue)>0:
             i = 0
-            while (abs(song.BPM-targetBPM) > abs(self.song_queue[i].BPM-targetBPM)):
-                i+=1
+            while (abs(song.get_BPM()-targetBPM) > abs(self.song_queue[i].BPM-targetBPM)):
+                i += 1
             self.song_queue.insert(i,song)
         else:
             self.song_queue.append(song)
