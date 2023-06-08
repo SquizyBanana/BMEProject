@@ -72,9 +72,9 @@ class Song():
         self.done_playing = True
         self.playback.stop()
 
+
 #TESTING STUFF:
-
-
+'''
 song2 = Song("The Pretender","Stef","5","pop",20)
 song2.play()
 time.sleep(5)
@@ -82,3 +82,4 @@ time.sleep(5)
 song2.stop()
 #song2.stop()
 print("not sven")
+'''
