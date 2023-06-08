@@ -52,24 +52,22 @@ class SongPicker():
         else:
             self.song_queue.append(song)
 
-    def adjust_queue(self, target_BPM): # Removes songs that do not fit the BPM and adds ones that do
+    def adjust_queue(self, target_BPM): # Removes songs that do not fit the BPM and adds ones that do, in order of fitness
         suiting_song_array = self.pick_suiting_songs(target_BPM)
-
         i=0
         while i < len(self.song_queue):
             if self.song_queue[i] not in suiting_song_array:
                 self.song_queue.pop(i)
             else:
                 i+=1
-
         for song in suiting_song_array:
             if song not in self.song_queue:
                 self.place_in_order(song, target_BPM)
 
-    def get_queue(self):
+    def get_queue(self): # Returns an array that is the queue of songs
         return self.song_queue
 
-    def get_song(self):
+    def get_song(self): # Use this one to get the first song of the queue
         return self.song_queue[0]
 
     def next_song(self): # Moves a song from the beginning of the queue to the end
