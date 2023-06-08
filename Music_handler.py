@@ -4,7 +4,7 @@ from songPicker import SongPicker
 
 class Music_Handler:
     def __init__(self):
-        self.song_picker = SongPicker()
+        self.song_picker = SongPicker(180)
 
     def play_song(self):
         self.song_picker.next_song()
