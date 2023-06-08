@@ -1,15 +1,13 @@
 # Code written by Emilie, Fran, Jules, Julia, Nienke and Sven
-from DataFilter import Data_filter
-from Music_handler import Music_Handler
-from LowPassMusicFilter import Music_Filter
+from Input.DataFilter import Data_filter
+from Music_handler.Music_handler import Music_Handler
 
-handler = Music_Handler()
+music_handler = Music_Handler()
 data = Data_filter(['6AAE', '7786'])
 goal_BPM = 180
 # data.data_input.start(data.sensors)
 song_end = True
-music_player = Music_Filter()
-music_player.play_song()
+
 while True:
     #attenuation, cadence = data.run()
     print("-----------------------------------------------------------------------------------------------------------------")

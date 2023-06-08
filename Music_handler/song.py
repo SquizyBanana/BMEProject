@@ -1,4 +1,10 @@
 # Class song that holds all information about songs (from the table of songs)
+# import required libraries
+from pydub import AudioSegment
+from pydub.playback import play
+import pydub.scipy_effects
+import time
+import threading
 
 class Song():
 
@@ -27,4 +33,9 @@ class Song():
 
     def get_BPM(self):
         return self.BPM
+
+    def play_song(self):
+        song_segment = AudioSegment.from_file("MusicFiles/Hollaback Girl.wav", format="wav")
+        t1 = threading.Thread(target=play, args=(song_segment,))
+        t1.start()
 
