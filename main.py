@@ -7,6 +7,8 @@ data = Data_filter(['6AAE', '7786'])
 goal_BPM = 180
 # data.data_input.start(data.sensors)
 song_end = True
+music_handler.loop(138,0.7)
+music_handler.play_song()
 
 while True:
     #attenuation, cadence = data.run()
@@ -14,6 +16,5 @@ while True:
     #print(attenuation)
     #print(cadence)
     music_handler.loop(138,0.7)
-    music_handler.play_song(138, 0.7)
     #target_BPM = cadence + (goal_BPM - cadence / 10) # subject to change
     #handler.loop(target_BPM,attenuation)

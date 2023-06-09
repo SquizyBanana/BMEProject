@@ -6,12 +6,13 @@ from .songPicker import SongPicker
 class Music_Handler:
     def __init__(self):
         self.song_picker = SongPicker(10000, relativeBPM=False, dataset="Music_handler/Testdataset.csv")
+
         # self.hum = Song("hum"...) # This will be the track that is added on top
 
-    def play_song(self,target_BPM, attenuation):
+    def play_song(self):
         song = self.song_picker.get_song()
+        song.play()
         if song.is_done_playing():
-            song.play()
             self.song_picker.next_song()
         # song = self.speedajustment(song)
         # self.song_player.play(song)
