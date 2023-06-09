@@ -5,7 +5,7 @@ from .songPicker import SongPicker
 
 class Music_Handler:
     def __init__(self):
-        self.song_picker = SongPicker(10000, relativeBPM=False, dataset="Music_handler/Testdataset.csv")
+        self.song_picker = SongPicker(10000, relativeBPM=False, dataset="Music_handler/Testdataset.csv") # !!!!!!! remove , relativeBPM=False, dataset="Music_handler/Testdataset.csv" and change the accepted range when done!
 
         # self.hum = Song("hum"...) # This will be the track that is added on top
 
