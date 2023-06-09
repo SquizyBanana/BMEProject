@@ -8,7 +8,6 @@ class Music_Handler:
         self.song_picker = SongPicker(180)
         # self.hum = Song("hum"...) # This will be the track that is added on top
 
-
     def play_song(self):
         song = self.song_picker.get_song()
         song.play()
