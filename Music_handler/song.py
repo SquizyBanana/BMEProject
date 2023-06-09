@@ -89,13 +89,15 @@ class Song:
         self.set_song_segment(new_song_segment, new_duration)
 
 #TESTING STUFF:
-song = Song("The Pretender", "Stef", "5", "rock", 20)
+'''
+song = Song("Womanizer", "Stef", "5", "rock", 20)
 song2 = Song("Viva La Vida","Stef","5","pop",20)
 song.play()
-song2.change_speed(speed_change_ratio=0.7)
+song2.change_speed(speed_change_ratio=0.5)
 song.stop()
 song2.play()
 time.sleep(1000)
 song2.stop()
 #song2.stop()
-
+print("not sven")
+'''
