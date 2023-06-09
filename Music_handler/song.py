@@ -11,7 +11,7 @@ class Song:
 
     def __init__(self, name, artist, music_id, genre, BPM):
         self.name = name
-        self.filename = "MusicFiles/"+name+".wav"
+        self.filename = "Music_handler/MusicFiles/"+name+".wav"
         self.artist = artist
         self.music_id = music_id
         self.genre = genre
@@ -53,7 +53,7 @@ class Song:
             #ae.speed_down(self.song_segment, speed_change_ratio)
             self.playback = _play_with_simpleaudio(self.song_segment)
 
-    def done_playing(self):
+    def is_done_playing(self):
         if time.time() > self.start_time+self.duration:
             self.stop()
         return self.done_playing

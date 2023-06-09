@@ -13,6 +13,7 @@ while True:
     print("-----------------------------------------------------------------------------------------------------------------")
     #print(attenuation)
     #print(cadence)
-    music_handler.play_song()
+    music_handler.loop(138,0.7)
+    music_handler.play_song(138, 0.7)
     #target_BPM = cadence + (goal_BPM - cadence / 10) # subject to change
     #handler.loop(target_BPM,attenuation)
