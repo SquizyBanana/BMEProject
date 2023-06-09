@@ -40,7 +40,7 @@ def speed_down(sound,
 
 
 # examples
-current_audio = AudioSegment.from_file('Smooth Criminal.wav')
+current_audio = AudioSegment.from_file('Viva La Vida.wav')
 speed_change_ratio = 0.7
 current_audio_slow_down = ae.speed_down(current_audio, speed_change_ratio)
 play(current_audio_slow_down) # listen to the slow down version of the audio

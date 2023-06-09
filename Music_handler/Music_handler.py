@@ -22,6 +22,7 @@ class Music_Handler:
         #self.noiseadder.addnoise(attenuation)
 """
 # Testing stuff
+
 mh = Music_Handler()
 mh.play_song()
 """

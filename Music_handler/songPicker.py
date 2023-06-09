@@ -1,11 +1,11 @@
 # A class for creating a queue of songs to be played.
 
 import csv
-from .song import Song
+from song import Song
 
 class SongPicker:
 
-    def __init__(self, BPM_fit_margin, relativeBPM = False, dataset="Music_handler/dataset music.csv"):
+    def __init__(self, BPM_fit_margin = 20, relativeBPM = False, dataset="dataset music.csv"):
         self.csv_file_name = dataset
         self.song_array = []
         self.read_csv()
@@ -31,9 +31,8 @@ class SongPicker:
                 else:
                     self.song_array.append(Song(row[0], row[1], row[2], row[3], row[4]))
                     line_count += 1
-        print(self.song_array)
 
-    def pick_suiting_songs(self, target_BPM):  # Updates the array of songs that could be played at target BPM
+    def pick_suiting_songs(self, target_BPM = 180):  # Updates the array of songs that could be played at target BPM
         suiting_song_array = []
         for song in self.song_array:
             if not self.relativeBPM:
@@ -44,7 +43,7 @@ class SongPicker:
                     suiting_song_array.append(song)
         return suiting_song_array
 
-    def place_in_order(self, song, targetBPM): # Places new songs into the queue at a correct place
+    def place_in_order(self, song, targetBPM = 180): # Places new songs into the queue at a correct place
         if len(self.song_queue)>0:
             i = 0
             while (abs(song.get_BPM()-targetBPM) > abs(self.song_queue[i].BPM-targetBPM)):
@@ -55,7 +54,6 @@ class SongPicker:
 
     def adjust_queue(self, target_BPM): # Removes songs that do not fit the BPM and adds ones that do, in order of fitness
         suiting_song_array = self.pick_suiting_songs(target_BPM)
-        print(suiting_song_array)
         i=0
         while i < len(self.song_queue):
             if self.song_queue[i] not in suiting_song_array:
@@ -70,7 +68,6 @@ class SongPicker:
         return self.song_queue
 
     def get_song(self): # Use this one to get the first song of the queue
-        print(self.song_queue)
         return self.song_queue[0]
 
     def next_song(self): # Moves a song from the beginning of the queue to the end

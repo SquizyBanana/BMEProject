@@ -11,7 +11,7 @@ class Song:
 
     def __init__(self, name, artist, music_id, genre, BPM):
         self.name = name
-        self.filename = "Music_handler/MusicFiles/"+name+".wav"
+        self.filename = "MusicFiles/"+name+".wav"
         self.artist = artist
         self.music_id = music_id
         self.genre = genre
@@ -71,19 +71,31 @@ class Song:
         self.done_playing = True
         self.playback.stop()
 
-    def load_at_speed(self, speed_change_ratio = 1):
-        self.song_segment = AudioSegment.from_file(self.filename, format="wav")
-        self.duration = self.song_segment.duration_seconds
+    def change_speed(self, speed_change_ratio = 1):
+        self.speed_change_thread = threading.Thread(target=self.load_speed, args=(speed_change_ratio,))
+        self.speed_change_thread.start()
+        self.speed_change_thread.join()
 
 
+    def set_song_segment(self, new_song_segment, new_duration):
+        self.song_segment = new_song_segment
+        self.duration = new_duration
+
+    def load_speed(self, speed_change_ratio):
+        print('Loading started')
+        new_song_segment = ae.speed_down(self.song_segment, speed_change_ratio)
+        print('Loading ended')
+        new_duration = self.song_segment.duration_seconds
+        self.set_song_segment(new_song_segment, new_duration)
 
 #TESTING STUFF:
-'''
-song2 = Song("The Pretender","Stef","5","pop",20)
-song2.play(looping=True)
-time.sleep(5)
-
+song = Song("The Pretender", "Stef", "5", "rock", 20)
+song2 = Song("Viva La Vida","Stef","5","pop",20)
+song.play()
+song2.change_speed(speed_change_ratio=0.7)
+song.stop()
+song2.play()
+time.sleep(1000)
 song2.stop()
 #song2.stop()
 print("not sven")
-'''
