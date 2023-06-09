@@ -1,7 +1,7 @@
 # all the music processing needs to be done before this can be made
 
-from songPicker import SongPicker
-from song import Song
+from .songPicker import SongPicker
+# from .song import Song
 
 class Music_Handler:
     def __init__(self):

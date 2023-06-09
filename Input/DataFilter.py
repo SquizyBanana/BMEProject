@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy
 import scipy.signal as signal
-from DataInput import Data_Input
 
+from .DataInput import Data_Input
 class Data_filter:
 
     def __init__(self,sensors):

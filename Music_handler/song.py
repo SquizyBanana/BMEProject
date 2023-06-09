@@ -7,7 +7,7 @@ import time
 import threading
 import audio_effects as ae
 
-class Song():
+class Song:
 
     def __init__(self, name, artist, music_id, genre, BPM):
         self.name = name
