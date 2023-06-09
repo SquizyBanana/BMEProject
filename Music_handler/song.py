@@ -17,12 +17,12 @@ class Song:
         self.genre = genre
         self.BPM = int(BPM)
 
-        self.thread = threading.Thread(target=self.loop_file)
         self.stop_flag = False
         self.playback = 0
 
         self.done_playing = True
         self.start_time = 0
+
         self.song_segment = AudioSegment.from_file(self.filename, format="wav")
         self.duration = self.song_segment.duration_seconds
 
@@ -46,37 +46,41 @@ class Song:
         return self.BPM
 
     def play(self, looping = False, speed_change_ratio = 1):
-        self.start_time = 0
-        if looping:
-            self.thread.start()
-        else:
-            #ae.speed_down(self.song_segment, speed_change_ratio)
-            self.playback = _play_with_simpleaudio(self.song_segment)
+        self.playback = _play_with_simpleaudio(self.song_segment)
+        self.thread = threading.Thread(target=self.play_file, kwargs=({'looping': looping}))
+        self.thread.start()
 
     def is_done_playing(self):
         if time.time() > self.start_time+self.duration:
             self.stop()
         return self.done_playing
 
-    def loop_file(self, speed_change_ratio = 1): # DO NOT CALL THIS (It is called when looping is set to True in the play method)
+    def play_file(self, looping = False):
+        self.start_time = time.time()
         self.stop_flag = False
-        #song_segment = AudioSegment.from_file(self.filename, format="wav")
         while not self.stop_flag:
             #ae.speed_down(self.song_segment, speed_change_ratio)
-            if time.time() > (self.start_time + self.duration):
+            if time.time() > (self.start_time + self.duration) and looping:
                 self.playback = _play_with_simpleaudio(self.song_segment)
                 self.start_time = time.time()
+            elif not looping:
+                self.stop_flag = True
 
     def stop(self): # Call this to stop a song from playing
         self.stop_flag = True
         self.done_playing = True
         self.playback.stop()
 
+    def load_at_speed(self, speed_change_ratio = 1):
+        self.song_segment = AudioSegment.from_file(self.filename, format="wav")
+        self.duration = self.song_segment.duration_seconds
+
+
 
 #TESTING STUFF:
 '''
 song2 = Song("The Pretender","Stef","5","pop",20)
-song2.play()
+song2.play(looping=True)
 time.sleep(5)
 
 song2.stop()

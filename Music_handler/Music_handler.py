@@ -8,7 +8,6 @@ class Music_Handler:
         self.song_picker = SongPicker(10000, relativeBPM=False, dataset="Music_handler/Testdataset.csv")
         # self.hum = Song("hum"...) # This will be the track that is added on top
 
-
     def play_song(self,target_BPM, attenuation):
         song = self.song_picker.get_song()
         if song.is_done_playing():
