@@ -12,9 +12,15 @@ music_handler.play_song()
 
 while True:
     #attenuation, cadence = data.run()
+
+    # test variables
+    cadence = 138
+    attenuation = 0.7
+
+
     print("-----------------------------------------------------------------------------------------------------------------")
     #print(attenuation)
     #print(cadence)
-    music_handler.loop(138,0.7)
+    music_handler.loop(cadence,attenuation)
     #target_BPM = cadence + (goal_BPM - cadence / 10) # subject to change
     #handler.loop(target_BPM,attenuation)
