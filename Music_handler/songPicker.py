@@ -1,11 +1,11 @@
 # A class for creating a queue of songs to be played.
 
 import csv
-from song import Song
+from .song import Song
 
 class SongPicker:
 
-    def __init__(self, BPM_fit_margin = 20, relativeBPM = False, dataset="dataset music.csv"):
+    def __init__(self, BPM_fit_margin = 20, relativeBPM = False, dataset=".dataset music.csv"):
         self.csv_file_name = dataset
         self.song_array = []
         self.read_csv()
