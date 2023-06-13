@@ -29,7 +29,7 @@ class Data_filter:
 
         # calculate the norm
         for i in range(len(sternum[0])):
-            sternum[3].append(numpy.sqrt(sternum[0][i]*sternum[0][i] + sternum[1][i]*sternum[1][i] + sternum[2][i]*sternum[2][i]))
+            sternum[3].append(numpy.sqrt(sternum[0][i] * sternum[0][i] + sternum[1][i]*sternum[1][i] + sternum[2][i] * sternum[2][i]))
         for i in range(len(tibia[0])):
             tibia[3].append(numpy.sqrt(tibia[0][i] * tibia[0][i] + tibia[1][i] * tibia[1][i] + tibia[2][i] * tibia[2][i]))
 
@@ -37,8 +37,8 @@ class Data_filter:
         sternum_norm_filtered = signal.lfilter(self.b, self.a, sternum[3])
         tibia_norm_filtered = signal.lfilter(self.b, self.a, tibia[3])
         # find peaks
-        peaks_s = signal.find_peaks(sternum_norm_filtered,height=1, distance=20)
-        peaks_t = signal.find_peaks(tibia_norm_filtered,height= 1, distance=20)
+        peaks_s = signal.find_peaks(sternum_norm_filtered,height=1.5, distance=20)
+        peaks_t = signal.find_peaks(tibia_norm_filtered,height= 1.5, distance=20)
 
         # seperate data for calculation
         peak_s_indecies, peak_s_values = peaks_s
@@ -52,7 +52,7 @@ class Data_filter:
         # filter sternum peaks
         for s in range(len(peak_s_values)):
             for t in range(len(peak_t_values)):
-                if 0 < (peak_s_indecies[s] - peak_t_indecies[t]) < 10:
+                if 0 < (peak_s_indecies[s] - peak_t_indecies[t]) < 20:
                     peaks_s_corrected.append(peak_s_values[s])
                     peaks_t_corrected.append(peak_t_values[t])
                     break
@@ -60,7 +60,6 @@ class Data_filter:
         norms_t = peaks_t_corrected
         norms_s = peaks_s_corrected
         attenuation = float(numpy.mean(numpy.array(norms_s)))/float(numpy.mean(numpy.array(norms_t)))
-        print("steps "+str(len(peaks_s[0])))
         cadence = len(peaks_s[0])*60/self.data_input.TIME_WINDOW
         return attenuation, cadence
 

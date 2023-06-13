@@ -20,10 +20,13 @@ class Song:
         self.stop_flag = False
         self.playback = 0
 
-        self.done_playing = True
+        self.done_playing = False
+        self.is_playing = False
         self.start_time = 0
 
-        self.song_segment = AudioSegment.from_file(self.filename, format="wav")
+        segment_start = 20 # How far into the song should the segment start
+        segment_end = 50 # How far into the song should the segment end
+        self.song_segment = AudioSegment.from_file(self.filename, format="wav")[segment_start*1000:segment_end * 1000]
         self.duration = self.song_segment.duration_seconds
 
     def __str__(self): # This is the method that is called if an instance of the class is included in a print() statement
@@ -46,6 +49,8 @@ class Song:
         return self.BPM
 
     def play(self, looping = False, speed_change_ratio = 1):
+        self.is_playing = True
+        self.done_playing = False
         self.playback = _play_with_simpleaudio(self.song_segment)
         self.thread = threading.Thread(target=self.play_file, kwargs=({'looping': looping}))
         self.thread.start()
@@ -69,6 +74,7 @@ class Song:
     def stop(self): # Call this to stop a song from playing
         self.stop_flag = True
         self.done_playing = True
+        self.is_playing = False
         self.playback.stop()
 
     def change_speed(self, speed_change_ratio = 1):

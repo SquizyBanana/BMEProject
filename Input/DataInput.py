@@ -11,7 +11,7 @@ class Data_Input:
         self.TIME_WINDOW = 8
         self.FREQUENCY = 100  # Adjust for sensor
 
-    def start(self, sensors, animation=False):
+    def start(self, sensors, anibool=False):
         print("Called")
         # Create a sensor manager for the given sensor names using the given callback
         self.sensors = sensors
@@ -34,7 +34,7 @@ class Data_Input:
         self.manager.start()
 
         # Only if animation set to true
-        if animation:
+        if anibool:
             self.ani = animation.FuncAnimation(self.fig, self.animate, interval=20)
             plt.show()
 

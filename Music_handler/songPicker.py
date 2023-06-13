@@ -29,7 +29,7 @@ class SongPicker:
                 if line_count == 0:
                     line_count += 1
                 else:
-                    self.song_array.append(Song(row[0], row[1], row[2], row[3], row[4]))
+                    self.song_array.append(Song(row[0], row[3], row[4], row[2], row[1]))
                     line_count += 1
 
     def pick_suiting_songs(self, target_BPM = 180):  # Updates the array of songs that could be played at target BPM
@@ -44,9 +44,9 @@ class SongPicker:
         return suiting_song_array
 
     def place_in_order(self, song, targetBPM = 180): # Places new songs into the queue at a correct place
-        if len(self.song_queue)>0:
-            i = 0
-            while (abs(song.get_BPM()-targetBPM) > abs(self.song_queue[i].BPM-targetBPM)):
+        if len(self.song_queue)>2:
+            i = 1
+            while (abs(song.get_BPM()-targetBPM) > abs(self.song_queue[i].BPM-targetBPM)) and i<len(self.song_queue)-1:
                 i += 1
             self.song_queue.insert(i,song)
         else:
@@ -54,15 +54,15 @@ class SongPicker:
 
     def adjust_queue(self, target_BPM): # Removes songs that do not fit the BPM and adds ones that do, in order of fitness
         suiting_song_array = self.pick_suiting_songs(target_BPM)
+        for song in suiting_song_array:
+            if song not in self.song_queue:
+                self.place_in_order(song, target_BPM)
         i=0
         while i < len(self.song_queue):
             if self.song_queue[i] not in suiting_song_array:
                 self.song_queue.pop(i)
             else:
                 i+=1
-        for song in suiting_song_array:
-            if song not in self.song_queue:
-                self.place_in_order(song, target_BPM)
 
     def get_queue(self): # Returns an array that is the queue of songs
         return self.song_queue
