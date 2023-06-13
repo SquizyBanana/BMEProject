@@ -19,13 +19,11 @@ class Data_filter:
         self.b, self.a = signal.butter(2, w, 'low')  # Create filter parameters
 
     def run(self):
-        #df_tibia['norm'] = numpy.sqrt(df_tibia['acc_x']*df_tibia['acc_x'] + df_tibia['acc_y']*df_tibia['acc_y'] + df_tibia['acc_z']*df_tibia['acc_z'])
-        # df_head['norm'] = numpy.sqrt(df_head['acc_x']*df_head['acc_x'] + df_head['acc_y']*df_head['acc_y'] + df_head['acc_z']*df_head['acc_z'])
-        #self.data_input.animate(1)
         self.data_input.fetch_measurements()
+        #self.data_input.set_measurements()
         values = self.data_input.get_values()
-        sternum = [values[self.sensors[0]]['acc_x'],values[self.sensors[0]]['acc_y'],values[self.sensors[0]]['acc_z'],[]]
-        tibia = [values[self.sensors[1]]['acc_x'],values[self.sensors[1]]['acc_y'],values[self.sensors[1]]['acc_z'],[]]
+        sternum = [values[self.sensors[0]]['acc_x'], values[self.sensors[0]]['acc_y'],values[self.sensors[0]]['acc_z'],[]]
+        tibia = [values[self.sensors[1]]['acc_x'], values[self.sensors[1]]['acc_y'],values[self.sensors[1]]['acc_z'],[]]
 
         # calculate the norm
         for i in range(len(sternum[0])):
@@ -59,9 +57,14 @@ class Data_filter:
 
         norms_t = peaks_t_corrected
         norms_s = peaks_s_corrected
-        attenuation = float(numpy.mean(numpy.array(norms_s)))/float(numpy.mean(numpy.array(norms_t)))
-        cadence = len(peaks_s[0])*60/self.data_input.TIME_WINDOW
-        return attenuation, cadence
+        self.attenuation = float(numpy.mean(numpy.array(norms_s)))/float(numpy.mean(numpy.array(norms_t)))
+        self.cadence = len(peaks_s[0])*60/self.data_input.TIME_WINDOW
+
+        self.data_input.set_cadence_attenuation(self.cadence, self.attenuation)
+        return self.attenuation, self.cadence
+
+    def get_data(self):
+        return self.attenuation, self.cadence
 
 
 

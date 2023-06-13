@@ -1,15 +1,17 @@
 # Code written by Emilie, Fran, Jules, Julia, Nienke and Sven
 from Input.DataFilter import Data_filter
 from Music_handler.Music_handler import Music_Handler
+from Input.DataInput import Data_Input
+
 
 music_handler = Music_Handler()
-data = Data_filter(['6AAE', '7786']) #back, tibia
+data = Data_Input(['6AAE', '7786']) #back, tibia
 goal_BPM = 180
-data.data_input.start(data.sensors)
+anibool = True
 song_end = True
 noise_level = False
 attenuation_treshold = 1.3
-#music_handler.loop(138,0.7)
+data.start(data.sensors, anibool=anibool)
 
 
 while True:
